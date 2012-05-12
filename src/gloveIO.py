@@ -14,32 +14,36 @@ class PowerGlove(object):
         Constructor
         '''
         self.bitflag=0
-#        self.buttons = {0: {'bit':0x01,'name':'up'},
-#                    1: {'bit':0x02,'name':'down'},
-#                    2: {'bit':0x04,'name':'left'},
-#                    3: {'bit':0x08,'name':'right'},
-#                    4: {'bit':0x10,'name':'up'},
-#                    5: {'bit':0x20,'name':'up'},
-#                    6: {'bit':0x40,'name':'up'},
-#                    7: {'bit':0x80,'name':'up'},
-#                    8: {'bit':0x100,'name':'up'},
-#                    9: {'bit':0x200,'name':'up'},
-#                    10: {'bit':0x400,'name':'up'},
-#                    11: {'bit':0x800,'name':'up'},
-#                    12: {'bit':0x1000,'name':'up'},
-#                    13: {'bit':0x2000,'name':'up'},
-#                    .
-#                    .
-#                    .
-#                    
-#                    
-#                    }
+        self.buttons = {0: {'bit':0x01,'name':'up'},
+                    1: {'bit':0x02,'name':'down'},
+                    2: {'bit':0x04,'name':'left'},
+                    3: {'bit':0x08,'name':'right'},
+                    4: {'bit':0x10,'name':'up'},
+                    5: {'bit':0x20,'name':'up'},
+                    6: {'bit':0x40,'name':'up'},
+                    7: {'bit':0x80,'name':'up'},
+                    8: {'bit':0x100,'name':'up'},
+                    9: {'bit':0x200,'name':'up'},
+                    10: {'bit':0x400,'name':'up'},
+                    11: {'bit':0x800,'name':'up'},
+                    12: {'bit':0x1000,'name':'up'},
+                    13: {'bit':0x2000,'name':'up'},
+                    .
+                    .
+                    .
+                    
+                    
+                    }
     
     def test_bit(self,bit):
         if (self.bitflag & bit) >0:
             return True
         else:
             return False
+    
+    def set_button_status(self):
+        for i in self.buttons.keys():
+            self.buttons[i]['status']
     
     '''
     def to_bin_str (self,v):
