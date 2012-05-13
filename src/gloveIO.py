@@ -9,17 +9,20 @@ class PowerGlove(object):
     '''
     PowerGlove class for IO to 
     '''
-    def __init__(self,params):
+    def __init__(self, name, com):
         '''
         Constructor
         '''
+        self.name = name
+        self.com = com
+        self.baud = 9600
         self.bitflag=0
         self.buttons = {0: {'bit':0x01,'name':'up'},
                     1: {'bit':0x02,'name':'down'},
                     2: {'bit':0x04,'name':'left'},
                     3: {'bit':0x08,'name':'right'},
-                    4: {'bit':0x10,'name':'up'},
-                    5: {'bit':0x20,'name':'up'},
+                    4: {'bit':0x10,'name':'B'},
+                    5: {'bit':0x20,'name':'A'},
                     6: {'bit':0x40,'name':'up'},
                     7: {'bit':0x80,'name':'up'},
                     8: {'bit':0x100,'name':'up'},
@@ -34,6 +37,21 @@ class PowerGlove(object):
                     
                     
                     }
+        self.accel = {'x':0,
+                      'y':0,
+                      'z',0}
+        
+    
+    def _init_serial(self):
+        self.serial = serial.Serial(com,self.baud)
+        return True
+    
+    def _read_serial(self):
+        return self.serial.readline()
+    
+    def update(self):
+        self._read_serial()
+        return
     
     def test_bit(self,bit):
         if (self.bitflag & bit) >0:
