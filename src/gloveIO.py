@@ -17,33 +17,23 @@ class PowerGlove(object):
         self.com = com
         self.baud = 9600
         self.bitflag=0
-        self.buttons = {0: {'bit':0x01,'name':'up'},
-                    1: {'bit':0x02,'name':'down'},
-                    2: {'bit':0x04,'name':'left'},
-                    3: {'bit':0x08,'name':'right'},
-                    4: {'bit':0x10,'name':'B'},
-                    5: {'bit':0x20,'name':'A'},
-                    6: {'bit':0x40,'name':'up'},
-                    7: {'bit':0x80,'name':'up'},
-                    8: {'bit':0x100,'name':'up'},
-                    9: {'bit':0x200,'name':'up'},
-                    10: {'bit':0x400,'name':'up'},
-                    11: {'bit':0x800,'name':'up'},
-                    12: {'bit':0x1000,'name':'up'},
-                    13: {'bit':0x2000,'name':'up'},
-                    .
-                    .
-                    .
-                    
-                    
-                    }
+        self.buttons = {'up':PGButton('up',0x01),
+                        'down':PGButton('down',0x02),
+                        'left':PGButton('left',0x04),
+                        'right':PGButton('right',0x08),
+                        'A':PGButton('A',0x10),
+                        'B':PGButton('B',0x20),
+                        'start':PGButton('start',0x40)
+                        }
+        
         self.accel = {'x':0,
                       'y':0,
-                      'z',0}
+                      'z':0
+                      }
         
     
     def _init_serial(self):
-        self.serial = serial.Serial(com,self.baud)
+        self.serial = serial.Serial(self.com,self.baud)
         return True
     
     def _read_serial(self):
@@ -52,16 +42,6 @@ class PowerGlove(object):
     def update(self):
         self._read_serial()
         return
-    
-    def test_bit(self,bit):
-        if (self.bitflag & bit) >0:
-            return True
-        else:
-            return False
-    
-    def set_button_status(self):
-        for i in self.buttons.keys():
-            self.buttons[i]['status']
     
     '''
     def to_bin_str (self,v):
@@ -131,15 +111,26 @@ class PowerGlove(object):
     '''
 
 class PGButton(object):
-    
+    """
+    Individual button element from powerglove
+    """
     def __init__(self,name,bit):
         self.name = name
         self.bit = bit
         self.depressed = False
-        
     
     def __show__(self):
         return "%s: %s" % (self.name,self.depressed)
+    
+    def test_bit(self,bit):
+        if (self.bitflag & bit) >0:
+            return True
+        else:
+            return False
+    
+    def set_button_status(self):
+        for i in self.buttons.keys():
+            self.buttons[i]['status']
     
 '''
 import serial
